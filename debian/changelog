@@ -1,3 +1,10 @@
+libxcb (1.1-1.oi) unstable; urgency=low
+
+  * First Slind build:
+    - sections adapted
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Sat, 24 May 2008 01:29:31 +0700
+
 libxcb (1.1-1) unstable; urgency=low
 
   * New upstream release.

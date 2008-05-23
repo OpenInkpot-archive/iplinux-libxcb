@@ -10,7 +10,7 @@ Vcs-Git: git://anongit.freedesktop.org/git/xcb/libxcb
 Vcs-Browser: http://gitweb.freedesktop.org/?p=xcb/libxcb.git
 
 Package: libxcb1
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding
@@ -51,7 +51,7 @@ Description: X C Binding, development files
 
 Package: libxcb1-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb1 (= ${binary:Version})
 Description: X C Binding, debugging symbols
@@ -70,7 +70,7 @@ Description: X C Binding, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-xlib0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, Xlib/XCB interface library
@@ -113,7 +113,7 @@ Description: X C Binding, Xlib/XCB interface library, development files
 
 Package: libxcb-xlib0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-xlib0 (= ${binary:Version})
 Description: X C Binding, Xlib/XCB interface library, debugging symbols
@@ -135,7 +135,7 @@ Description: X C Binding, Xlib/XCB interface library, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-composite0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, composite extension
@@ -174,7 +174,7 @@ Description: X C Binding, composite extension, development files
 
 Package: libxcb-composite0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-composite0 (= ${binary:Version})
 Description: X C Binding, composite extension, debugging symbols
@@ -194,7 +194,7 @@ Description: X C Binding, composite extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-damage0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, damage extension
@@ -233,7 +233,7 @@ Description: X C Binding, damage extension, development files
 
 Package: libxcb-damage0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-damage0 (= ${binary:Version})
 Description: X C Binding, damage extension, debugging symbols
@@ -253,7 +253,7 @@ Description: X C Binding, damage extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-dpms0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, dpms extension
@@ -292,7 +292,7 @@ Description: X C Binding, dpms extension, development files
 
 Package: libxcb-dpms0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-dpms0 (= ${binary:Version})
 Description: X C Binding, dpms extension, debugging symbols
@@ -312,7 +312,7 @@ Description: X C Binding, dpms extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-glx0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, glx extension
@@ -351,7 +351,7 @@ Description: X C Binding, glx extension, development files
 
 Package: libxcb-glx0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-glx0 (= ${binary:Version})
 Description: X C Binding, glx extension, debugging symbols
@@ -371,7 +371,7 @@ Description: X C Binding, glx extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-randr0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, randr extension
@@ -410,7 +410,7 @@ Description: X C Binding, randr extension, development files
 
 Package: libxcb-randr0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-randr0 (= ${binary:Version})
 Description: X C Binding, randr extension, debugging symbols
@@ -430,7 +430,7 @@ Description: X C Binding, randr extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-record0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, record extension
@@ -469,7 +469,7 @@ Description: X C Binding, record extension, development files
 
 Package: libxcb-record0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-record0 (= ${binary:Version})
 Description: X C Binding, record extension, debugging symbols
@@ -489,7 +489,7 @@ Description: X C Binding, record extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-render0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, render extension
@@ -528,7 +528,7 @@ Description: X C Binding, render extension, development files
 
 Package: libxcb-render0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-render0 (= ${binary:Version})
 Description: X C Binding, render extension, debugging symbols
@@ -548,7 +548,7 @@ Description: X C Binding, render extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-res0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, res extension
@@ -587,7 +587,7 @@ Description: X C Binding, res extension, development files
 
 Package: libxcb-res0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-res0 (= ${binary:Version})
 Description: X C Binding, res extension, debugging symbols
@@ -607,7 +607,7 @@ Description: X C Binding, res extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-screensaver0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, screensaver extension
@@ -646,7 +646,7 @@ Description: X C Binding, screensaver extension, development files
 
 Package: libxcb-screensaver0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-screensaver0 (= ${binary:Version})
 Description: X C Binding, screensaver extension, debugging symbols
@@ -666,7 +666,7 @@ Description: X C Binding, screensaver extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-shape0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, shape extension
@@ -705,7 +705,7 @@ Description: X C Binding, shape extension, development files
 
 Package: libxcb-shape0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-shape0 (= ${binary:Version})
 Description: X C Binding, shape extension, debugging symbols
@@ -725,7 +725,7 @@ Description: X C Binding, shape extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-shm0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, shm extension
@@ -764,7 +764,7 @@ Description: X C Binding, shm extension, development files
 
 Package: libxcb-shm0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-shm0 (= ${binary:Version})
 Description: X C Binding, shm extension, debugging symbols
@@ -784,7 +784,7 @@ Description: X C Binding, shm extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-sync0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, sync extension
@@ -823,7 +823,7 @@ Description: X C Binding, sync extension, development files
 
 Package: libxcb-sync0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-sync0 (= ${binary:Version})
 Description: X C Binding, sync extension, debugging symbols
@@ -843,7 +843,7 @@ Description: X C Binding, sync extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-xevie0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, xevie extension
@@ -882,7 +882,7 @@ Description: X C Binding, xevie extension, development files
 
 Package: libxcb-xevie0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-xevie0 (= ${binary:Version})
 Description: X C Binding, xevie extension, debugging symbols
@@ -902,7 +902,7 @@ Description: X C Binding, xevie extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-xf86dri0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, xf86dri extension
@@ -941,7 +941,7 @@ Description: X C Binding, xf86dri extension, development files
 
 Package: libxcb-xf86dri0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-xf86dri0 (= ${binary:Version})
 Description: X C Binding, xf86dri extension, debugging symbols
@@ -961,7 +961,7 @@ Description: X C Binding, xf86dri extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-xfixes0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, xfixes extension
@@ -1000,7 +1000,7 @@ Description: X C Binding, xfixes extension, development files
 
 Package: libxcb-xfixes0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-xfixes0 (= ${binary:Version})
 Description: X C Binding, xfixes extension, debugging symbols
@@ -1020,7 +1020,7 @@ Description: X C Binding, xfixes extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-xinerama0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, xinerama extension
@@ -1059,7 +1059,7 @@ Description: X C Binding, xinerama extension, development files
 
 Package: libxcb-xinerama0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-xinerama0 (= ${binary:Version})
 Description: X C Binding, xinerama extension, debugging symbols
@@ -1079,7 +1079,7 @@ Description: X C Binding, xinerama extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-xprint0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, xprint extension
@@ -1118,7 +1118,7 @@ Description: X C Binding, xprint extension, development files
 
 Package: libxcb-xprint0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-xprint0 (= ${binary:Version})
 Description: X C Binding, xprint extension, debugging symbols
@@ -1138,7 +1138,7 @@ Description: X C Binding, xprint extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-xtest0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, xtest extension
@@ -1177,7 +1177,7 @@ Description: X C Binding, xtest extension, development files
 
 Package: libxcb-xtest0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-xtest0 (= ${binary:Version})
 Description: X C Binding, xtest extension, debugging symbols
@@ -1197,7 +1197,7 @@ Description: X C Binding, xtest extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-xv0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, xv extension
@@ -1236,7 +1236,7 @@ Description: X C Binding, xv extension, development files
 
 Package: libxcb-xv0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-xv0 (= ${binary:Version})
 Description: X C Binding, xv extension, debugging symbols
@@ -1256,7 +1256,7 @@ Description: X C Binding, xv extension, debugging symbols
     machine-parsable protocol descriptions
 
 Package: libxcb-xvmc0
-Section: libs
+Section: gui
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X C Binding, xvmc extension
@@ -1295,7 +1295,7 @@ Description: X C Binding, xvmc extension, development files
 
 Package: libxcb-xvmc0-dbg
 Priority: extra
-Section: libdevel
+Section: debug
 Architecture: any
 Depends: libxcb-xvmc0 (= ${binary:Version})
 Description: X C Binding, xvmc extension, debugging symbols
