@@ -4,14 +4,15 @@ DEB_DH_INSTALL_SOURCEDIR=debian/tmp
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
+include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 
 DEB_MAKE_CHECK_TARGET=check
 DEB_MAKE_INVOKE = $(DEB_MAKE_ENVVARS) $(MAKE) -C $(DEB_BUILDDIR) CFLAGS="$(CFLAGS)"
 
-debian/copyright: debian/copyright.debian COPYING
-	cat $+ > $@
+#debian/copyright: debian/copyright.debian COPYING
+#	cat $+ > $@
 
-clean::
-	-rm -f debian/copyright
+#clean::
+#	-rm -f debian/copyright
 
-common-install-prehook-arch common-install-prehook-indep:: debian/copyright
+#common-install-prehook-arch common-install-prehook-indep:: debian/copyright
