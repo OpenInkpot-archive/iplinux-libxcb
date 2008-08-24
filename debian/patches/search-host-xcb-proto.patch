@@ -1,8 +1,8 @@
-Index: libxcb-1.1/configure.ac
+Index: libxcb/configure.ac
 ===================================================================
---- libxcb-1.1.orig/configure.ac	2008-05-23 20:58:03.000000000 +0000
-+++ libxcb-1.1/configure.ac	2008-05-23 21:00:09.000000000 +0000
-@@ -30,7 +30,6 @@
+--- libxcb.orig/configure.ac	2008-08-24 23:12:55.000000000 +0700
++++ libxcb/configure.ac	2008-08-25 03:47:54.000000000 +0700
+@@ -32,7 +32,6 @@
  AC_SUBST(HTML_CHECK_RESULT)
  
  # Checks for pkg-config packages
@@ -10,7 +10,7 @@ Index: libxcb-1.1/configure.ac
  NEEDED="pthread-stubs xau >= 0.99.2"
  PKG_CHECK_MODULES(NEEDED, $NEEDED)
  
-@@ -52,9 +51,10 @@
+@@ -54,15 +53,16 @@
  
  AC_SUBST(NEEDED)
  
@@ -22,163 +22,10 @@ Index: libxcb-1.1/configure.ac
  AC_MSG_RESULT($XCBPROTO_XCBINCLUDEDIR)
  AC_SUBST(XCBPROTO_XCBINCLUDEDIR)
  
-Index: libxcb-1.1/configure
-===================================================================
---- libxcb-1.1.orig/configure	2008-05-23 20:58:08.000000000 +0000
-+++ libxcb-1.1/configure	2008-05-23 20:58:21.000000000 +0000
-@@ -876,8 +876,6 @@
- LIBTOOL
- XSLTPROC
- HTML_CHECK_RESULT
--XCBPROTO_CFLAGS
--XCBPROTO_LIBS
- NEEDED_CFLAGS
- NEEDED_LIBS
- XDMCP_CFLAGS
-@@ -911,8 +909,6 @@
- CXXCPP
- F77
- FFLAGS
--XCBPROTO_CFLAGS
--XCBPROTO_LIBS
- NEEDED_CFLAGS
- NEEDED_LIBS
- XDMCP_CFLAGS
-@@ -1532,10 +1528,6 @@
-   CXXCPP      C++ preprocessor
-   F77         Fortran 77 compiler command
-   FFLAGS      Fortran 77 compiler flags
--  XCBPROTO_CFLAGS
--              C compiler flags for XCBPROTO, overriding pkg-config
--  XCBPROTO_LIBS
--              linker flags for XCBPROTO, overriding pkg-config
-   NEEDED_CFLAGS
-               C compiler flags for NEEDED, overriding pkg-config
-   NEEDED_LIBS linker flags for NEEDED, overriding pkg-config
-@@ -20191,117 +20183,6 @@
- 
- 
- # Checks for pkg-config packages
--
--pkg_failed=no
--{ echo "$as_me:$LINENO: checking for XCBPROTO" >&5
--echo $ECHO_N "checking for XCBPROTO... $ECHO_C" >&6; }
--
--if test -n "$PKG_CONFIG"; then
--    if test -n "$XCBPROTO_CFLAGS"; then
--        pkg_cv_XCBPROTO_CFLAGS="$XCBPROTO_CFLAGS"
--    else
--        if test -n "$PKG_CONFIG" && \
--    { (echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"xcb-proto >= 1.1\"") >&5
--  ($PKG_CONFIG --exists --print-errors "xcb-proto >= 1.1") 2>&5
--  ac_status=$?
--  echo "$as_me:$LINENO: \$? = $ac_status" >&5
--  (exit $ac_status); }; then
--  pkg_cv_XCBPROTO_CFLAGS=`$PKG_CONFIG --cflags "xcb-proto >= 1.1" 2>/dev/null`
--else
--  pkg_failed=yes
--fi
--    fi
--else
--	pkg_failed=untried
--fi
--if test -n "$PKG_CONFIG"; then
--    if test -n "$XCBPROTO_LIBS"; then
--        pkg_cv_XCBPROTO_LIBS="$XCBPROTO_LIBS"
--    else
--        if test -n "$PKG_CONFIG" && \
--    { (echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"xcb-proto >= 1.1\"") >&5
--  ($PKG_CONFIG --exists --print-errors "xcb-proto >= 1.1") 2>&5
--  ac_status=$?
--  echo "$as_me:$LINENO: \$? = $ac_status" >&5
--  (exit $ac_status); }; then
--  pkg_cv_XCBPROTO_LIBS=`$PKG_CONFIG --libs "xcb-proto >= 1.1" 2>/dev/null`
--else
--  pkg_failed=yes
--fi
--    fi
--else
--	pkg_failed=untried
--fi
--
--
--
--if test $pkg_failed = yes; then
--
--if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
--        _pkg_short_errors_supported=yes
--else
--        _pkg_short_errors_supported=no
--fi
--        if test $_pkg_short_errors_supported = yes; then
--	        XCBPROTO_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "xcb-proto >= 1.1"`
--        else
--	        XCBPROTO_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "xcb-proto >= 1.1"`
--        fi
--	# Put the nasty error message in config.log where it belongs
--	echo "$XCBPROTO_PKG_ERRORS" >&5
--
--	{ { echo "$as_me:$LINENO: error: Package requirements (xcb-proto >= 1.1) were not met:
--
--$XCBPROTO_PKG_ERRORS
--
--Consider adjusting the PKG_CONFIG_PATH environment variable if you
--installed software in a non-standard prefix.
--
--Alternatively, you may set the environment variables XCBPROTO_CFLAGS
--and XCBPROTO_LIBS to avoid the need to call pkg-config.
--See the pkg-config man page for more details.
--" >&5
--echo "$as_me: error: Package requirements (xcb-proto >= 1.1) were not met:
--
--$XCBPROTO_PKG_ERRORS
--
--Consider adjusting the PKG_CONFIG_PATH environment variable if you
--installed software in a non-standard prefix.
--
--Alternatively, you may set the environment variables XCBPROTO_CFLAGS
--and XCBPROTO_LIBS to avoid the need to call pkg-config.
--See the pkg-config man page for more details.
--" >&2;}
--   { (exit 1); exit 1; }; }
--elif test $pkg_failed = untried; then
--	{ { echo "$as_me:$LINENO: error: The pkg-config script could not be found or is too old.  Make sure it
--is in your PATH or set the PKG_CONFIG environment variable to the full
--path to pkg-config.
--
--Alternatively, you may set the environment variables XCBPROTO_CFLAGS
--and XCBPROTO_LIBS to avoid the need to call pkg-config.
--See the pkg-config man page for more details.
--
--To get pkg-config, see <http://www.freedesktop.org/software/pkgconfig>.
--See \`config.log' for more details." >&5
--echo "$as_me: error: The pkg-config script could not be found or is too old.  Make sure it
--is in your PATH or set the PKG_CONFIG environment variable to the full
--path to pkg-config.
--
--Alternatively, you may set the environment variables XCBPROTO_CFLAGS
--and XCBPROTO_LIBS to avoid the need to call pkg-config.
--See the pkg-config man page for more details.
--
--To get pkg-config, see <http://www.freedesktop.org/software/pkgconfig>.
--See \`config.log' for more details." >&2;}
--   { (exit 1); exit 1; }; }
--else
--	XCBPROTO_CFLAGS=$pkg_cv_XCBPROTO_CFLAGS
--	XCBPROTO_LIBS=$pkg_cv_XCBPROTO_LIBS
--        { echo "$as_me:$LINENO: result: yes" >&5
--echo "${ECHO_T}yes" >&6; }
--	:
--fi
- NEEDED="pthread-stubs xau >= 0.99.2"
- 
- pkg_failed=no
-@@ -20712,7 +20593,7 @@
- # Find the xcb-proto protocol descriptions
- { echo "$as_me:$LINENO: checking XCBPROTO_XCBINCLUDEDIR" >&5
- echo $ECHO_N "checking XCBPROTO_XCBINCLUDEDIR... $ECHO_C" >&6; }
--XCBPROTO_XCBINCLUDEDIR=`$PKG_CONFIG --variable=xcbincludedir xcb-proto`
-+XCBPROTO_XCBINCLUDEDIR=`env -u PKG_CONFIG_LIBDIR pkg-config --variable=xcbincludedir xcb-proto`
- { echo "$as_me:$LINENO: result: $XCBPROTO_XCBINCLUDEDIR" >&5
- echo "${ECHO_T}$XCBPROTO_XCBINCLUDEDIR" >&6; }
+ # Find the xcbgen Python package
+ AC_MSG_CHECKING(XCBPROTO_XCBPYTHONDIR)
+-XCBPROTO_XCBPYTHONDIR=`$PKG_CONFIG --variable=pythondir xcb-proto`
++XCBPROTO_XCBPYTHONDIR=`env -u PKG_CONFIG_LIBDIR pkg-config --variable=pythondir xcb-proto`
+ AC_MSG_RESULT($XCBPROTO_XCBPYTHONDIR)
+ AC_SUBST(XCBPROTO_XCBPYTHONDIR)
  

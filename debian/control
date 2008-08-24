@@ -2,8 +2,8 @@ Source: libxcb
 Priority: optional
 Section: libdevel
 Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
-Build-Depends: libxau-dev, libxdmcp-dev, xcb-proto (>= 1.1), xcb-proto (<< 2.0), libpthread-stubs0-dev (>= 0.1-1), cdbs (>= 0.4.40), debhelper (>= 5.0.0), pkg-config, xsltproc (>= 1.1.19-1), check (>= 0.9.4-2), binutils (>= 2.12.90.0.9), quilt
-XCS-Cross-Host-Build-Depends: xcb-proto (>= 1.1), xcb-proto (<< 2.0), cdbs (>= 0.4.40), debhelper (>= 5.0.0), pkg-config, xsltproc (>= 1.1.19-1), check (>= 0.9.4-2), binutils (>= 2.12.90.0.9), quilt
+Build-Depends: libxau-dev, libxdmcp-dev, xcb-proto (>= 1.2), xcb-proto (<< 2.0), libpthread-stubs0-dev (>= 0.1-1), cdbs (>= 0.4.40), debhelper (>= 5.0.0), pkg-config, xsltproc (>= 1.1.19-1), check (>= 0.9.4-2), binutils (>= 2.12.90.0.9), quilt
+XCS-Cross-Host-Build-Depends: xcb-proto (>= 1.2), xcb-proto (<< 2.0), cdbs (>= 0.4.40), debhelper (>= 5.0.0), pkg-config, xsltproc (>= 1.1.19-1), check (>= 0.9.4-2), binutils (>= 2.12.90.0.9), quilt
 XCS-Cross-Build-Depends: libxau-dev, libxdmcp-dev, libpthread-stubs0-dev (>= 0.1-1)
 Standards-Version: 3.7.2
 Homepage: http://xcb.freedesktop.org

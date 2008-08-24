@@ -9,6 +9,11 @@ include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 DEB_MAKE_CHECK_TARGET=check
 DEB_MAKE_INVOKE = $(DEB_MAKE_ENVVARS) $(MAKE) -C $(DEB_BUILDDIR) CFLAGS="$(CFLAGS)"
 
+pre-build:: configure
+
+configure: apply-patches
+	autoreconf -f -i -v
+
 #debian/copyright: debian/copyright.debian COPYING
 #	cat $+ > $@
 
