@@ -216,6 +216,7 @@ static int _xcb_open_tcp(char *host, char *protocol, const unsigned short port)
     if (protocol && strcmp("tcp",protocol))
         return -1;
 
+#ifdef AF_INET6
     /* Allow IPv6 addresses enclosed in brackets. */
     if(host[0] == '[' && (bracket = strrchr(host, ']')) && bracket[1] == '\0')
     {
@@ -224,6 +225,7 @@ static int _xcb_open_tcp(char *host, char *protocol, const unsigned short port)
         hints.ai_flags |= AI_NUMERICHOST;
         hints.ai_family = AF_INET6;
     }
+#endif
 
     snprintf(service, sizeof(service), "%hu", port);
     if(getaddrinfo(host, service, &hints, &results))
@@ -244,13 +246,16 @@ static int _xcb_open_tcp(char *host, char *protocol, const unsigned short port)
 static int _xcb_open_unix(char *protocol, const char *file)
 {
     int fd;
-    struct sockaddr_un addr = { AF_UNIX };
+    struct sockaddr_un addr;
 
     if (protocol && strcmp("unix",protocol))
         return -1;
 
     strcpy(addr.sun_path, file);
-
+    addr.sun_family = AF_UNIX;
+#if HAVE_SOCKADDR_SUN_LEN
+    addr.sun_len = SUN_LEN(&addr);
+#endif
     fd = socket(AF_UNIX, SOCK_STREAM, 0);
     if(fd == -1)
         return -1;
