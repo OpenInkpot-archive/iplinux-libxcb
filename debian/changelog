@@ -1,3 +1,10 @@
+libxcb (1.2-1) asimov; urgency=low
+
+  * New upstream release.
+    - libxcb-xlib no longer exists.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Sun, 15 Mar 2009 04:34:18 +0600
+
 libxcb (1.1.91-0.oi1) asimov; urgency=low
 
   * New upstream release.
