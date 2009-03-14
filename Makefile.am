@@ -2,9 +2,7 @@ SUBDIRS=src tests doc
 
 pkgconfigdir = $(libdir)/pkgconfig
 
-pkgconfig_DATA = \
-xcb.pc \
-xcb-xlib.pc
+pkgconfig_DATA = xcb.pc
 
 if BUILD_COMPOSITE
 pkgconfig_DATA += xcb-composite.pc
@@ -27,7 +25,7 @@ endif
 if BUILD_RENDER
 pkgconfig_DATA += xcb-render.pc
 endif
-if BUILD_RES
+if BUILD_RESOURCE
 pkgconfig_DATA += xcb-res.pc
 endif
 if BUILD_SCREENSAVER
@@ -45,7 +43,7 @@ endif
 if BUILD_XEVIE
 pkgconfig_DATA += xcb-xevie.pc
 endif
-if BUILD_XF86DRI
+if BUILD_XFREE86_DRI
 pkgconfig_DATA += xcb-xf86dri.pc
 endif
 if BUILD_XFIXES

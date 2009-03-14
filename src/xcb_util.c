@@ -38,6 +38,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include <unistd.h>
 #include <string.h>
 
@@ -123,10 +124,15 @@ static int _xcb_open_unix(char *protocol, const char *file);
 #ifdef DNETCONN
 static int _xcb_open_decnet(const char *host, char *protocol, const unsigned short port);
 #endif
+#ifdef HAVE_ABSTRACT_SOCKETS
+static int _xcb_open_abstract(char *protocol, const char *file);
+#endif
 
 static int _xcb_open(char *host, char *protocol, const int display)
 {
+#ifdef HAVE_ABSTRACT_SOCKETS
     int fd;
+#endif
     static const char base[] = "/tmp/.X11-unix/X";
     char file[sizeof(base) + 20];
 
@@ -156,10 +162,13 @@ static int _xcb_open(char *host, char *protocol, const int display)
 
     /* display specifies Unix socket */
     snprintf(file, sizeof(file), "%s%d", base, display);
+#ifdef HAVE_ABSTRACT_SOCKETS
+    fd = _xcb_open_abstract(protocol, file);
+    if (fd >= 0 || (errno != ENOENT && errno != ECONNREFUSED))
+        return fd;
+
+#endif
     return  _xcb_open_unix(protocol, file);
-
-
-    return fd;
 }
 
 #ifdef DNETCONN
@@ -192,8 +201,10 @@ static int _xcb_open_decnet(const char *host, const char *protocol, const unsign
     accessdata.acc_accl = strlen((char *)accessdata.acc_acc);
     setsockopt(fd, DNPROTO_NSP, SO_CONACCESS, &accessdata, sizeof(accessdata));
 
-    if(connect(fd, (struct sockaddr *) &addr, sizeof(addr)) == -1)
+    if(connect(fd, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
+        close(fd);
         return -1;
+    }
     return fd;
 }
 #endif
@@ -201,20 +212,23 @@ static int _xcb_open_decnet(const char *host, const char *protocol, const unsign
 static int _xcb_open_tcp(char *host, char *protocol, const unsigned short port)
 {
     int fd = -1;
-    struct addrinfo hints = { 0
-#ifdef AI_ADDRCONFIG
-                              | AI_ADDRCONFIG
-#endif
-#ifdef AI_NUMERICSERV
-                              | AI_NUMERICSERV
-#endif
-                              , AF_UNSPEC, SOCK_STREAM };
+    struct addrinfo hints;
     char service[6]; /* "65535" with the trailing '\0' */
     struct addrinfo *results, *addr;
     char *bracket;
 
     if (protocol && strcmp("tcp",protocol))
         return -1;
+
+    memset(&hints, 0, sizeof(hints));
+#ifdef AI_ADDRCONFIG
+    hints.ai_flags |= AI_ADDRCONFIG;
+#endif
+#ifdef AI_NUMERICSERV
+    hints.ai_flags |= AI_NUMERICSERV;
+#endif
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
 
 #ifdef AF_INET6
     /* Allow IPv6 addresses enclosed in brackets. */
@@ -235,9 +249,12 @@ static int _xcb_open_tcp(char *host, char *protocol, const unsigned short port)
     for(addr = results; addr; addr = addr->ai_next)
     {
         fd = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
-        if(fd >= 0 && connect(fd, addr->ai_addr, addr->ai_addrlen) >= 0)
-            break;
-        fd = -1;
+        if(fd >= 0) {
+            if (connect(fd, addr->ai_addr, addr->ai_addrlen) >= 0)
+                break;
+            close(fd);
+            fd = -1;
+        }
     }
     freeaddrinfo(results);
     return fd;
@@ -253,16 +270,45 @@ static int _xcb_open_unix(char *protocol, const char *file)
 
     strcpy(addr.sun_path, file);
     addr.sun_family = AF_UNIX;
-#if HAVE_SOCKADDR_SUN_LEN
+#ifdef HAVE_SOCKADDR_SUN_LEN
     addr.sun_len = SUN_LEN(&addr);
 #endif
     fd = socket(AF_UNIX, SOCK_STREAM, 0);
     if(fd == -1)
         return -1;
-    if(connect(fd, (struct sockaddr *) &addr, sizeof(addr)) == -1)
+    if(connect(fd, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
+        close(fd);
         return -1;
+    }
     return fd;
 }
+
+#ifdef HAVE_ABSTRACT_SOCKETS
+static int _xcb_open_abstract(char *protocol, const char *file)
+{
+    int fd;
+    struct sockaddr_un addr = {0};
+    socklen_t namelen;
+
+    if (protocol && strcmp("unix",protocol))
+        return -1;
+
+    strcpy(addr.sun_path + 1, file);
+    addr.sun_family = AF_UNIX;
+    namelen = offsetof(struct sockaddr_un, sun_path) + 1 + strlen(file);
+#ifdef HAVE_SOCKADDR_SUN_LEN
+    addr.sun_len = 1 + strlen(file);
+#endif
+    fd = socket(AF_UNIX, SOCK_STREAM, 0);
+    if (fd == -1)
+        return -1;
+    if (connect(fd, (struct sockaddr *) &addr, namelen) == -1) {
+        close(fd);
+        return -1;
+    }
+    return fd;
+}
+#endif
 
 xcb_connection_t *xcb_connect(const char *displayname, int *screenp)
 {
@@ -271,11 +317,22 @@ xcb_connection_t *xcb_connect(const char *displayname, int *screenp)
     char *protocol;
     xcb_connection_t *c;
     xcb_auth_info_t auth;
+    
+    int parsed = _xcb_parse_display(displayname, &host, &protocol, &display, screenp);
 
-    if(!_xcb_parse_display(displayname, &host, &protocol, &display, screenp))
+#ifdef HAVE_LAUNCHD
+    if(!displayname)
+        displayname = getenv("DISPLAY");
+    if(displayname && strlen(displayname)>11 && !strncmp(displayname, "/tmp/launch", 11))
+        fd = _xcb_open_unix(NULL, displayname);
+    else
+#endif
+    if(!parsed)
         return (xcb_connection_t *) &error_connection;
-    fd = _xcb_open(host, protocol, display);
+    else
+        fd = _xcb_open(host, protocol, display);
     free(host);
+
     if(fd == -1)
         return (xcb_connection_t *) &error_connection;
 
@@ -296,10 +353,21 @@ xcb_connection_t *xcb_connect_to_display_with_auth_info(const char *displayname,
     char *host;
     char *protocol;
 
-    if(!_xcb_parse_display(displayname, &host, &protocol, &display, screenp))
+    int parsed = _xcb_parse_display(displayname, &host, &protocol, &display, screenp);
+    
+#ifdef HAVE_LAUNCHD
+    if(!displayname)
+        displayname = getenv("DISPLAY");
+    if(displayname && strlen(displayname)>11 && !strncmp(displayname, "/tmp/launch", 11))
+        fd = _xcb_open_unix(NULL, displayname);
+    else
+#endif
+    if(!parsed)
         return (xcb_connection_t *) &error_connection;
-    fd = _xcb_open(host, protocol, display);
+    else
+        fd = _xcb_open(host, protocol, display);
     free(host);
+
     if(fd == -1)
         return (xcb_connection_t *) &error_connection;
 

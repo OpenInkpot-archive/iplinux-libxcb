@@ -17,18 +17,6 @@ _cplusplus_annoyances = {'class' : '_class',
                          'new'   : '_new',
                          'delete': '_delete'}
 
-_cardinal_types = ['CARD8', 'uint8_t',
-                   'CARD16','uint16_t',
-                   'CARD32','uint32_t',
-                   'INT8', 'int8_t',
-                   'INT16', 'int16_t',
-                   'INT32', 'int32_t',
-                   'BYTE',
-                   'BOOL',
-                   'char',
-                   'void',
-                   'float',
-                   'double']
 _hlines = []
 _hlevel = 0
 _clines = []
@@ -176,6 +164,12 @@ def c_open(self):
         for (n, h) in self.imports:
             _hc('#include "%s.h"', h)
 
+    _h('')
+    _h('#ifdef __cplusplus')
+    _h('extern "C" {')
+    _h('#endif')
+
+    if _ns.is_ext:
         _h('')
         _h('#define XCB_%s_MAJOR_VERSION %s', _ns.ext_name.upper(), _ns.major_version)
         _h('#define XCB_%s_MINOR_VERSION %s', _ns.ext_name.upper(), _ns.minor_version)
@@ -183,7 +177,7 @@ def c_open(self):
         _h('extern xcb_extension_t %s;', _ns.c_ext_global_name)
 
         _c('')
-        _c('xcb_extension_t %s = { "%s" };', _ns.c_ext_global_name, _ns.ext_xname)
+        _c('xcb_extension_t %s = { "%s", 0 };', _ns.c_ext_global_name, _ns.ext_xname)
 
 def c_close(self):
     '''
@@ -193,6 +187,12 @@ def c_close(self):
     _h_setlevel(2)
     _c_setlevel(2)
     _hc('')
+
+    _h('')
+    _h('#ifdef __cplusplus')
+    _h('}')
+    _h('#endif')
+
     _h('')
     _h('#endif')
     _h('')
@@ -307,7 +307,7 @@ def _c_iterator_get_end(field, accum):
         return _c_iterator_get_end(field.type.last_varsized_field, accum)
     if field.type.is_list:
         # XXX we can always use the first way
-        if field.type.c_type in _cardinal_types:
+        if field.type.member.is_simple:
             return field.c_end_name + '(' + accum + ')'
         else:
             return field.type.member.c_end_name + '(' + field.c_iterator_name + '(' + accum + '))'
@@ -443,7 +443,7 @@ def _c_accessors_field(self, field):
     '''
     Declares the accessor functions for a non-list field that follows a variable-length field.
     '''
-    if field.field_type[0] in _cardinal_types:
+    if field.type.is_simple:
         _hc('')
         _hc('')
         _hc('/*****************************************************************************')
@@ -535,7 +535,7 @@ def _c_accessors_list(self, field):
     _c('    return %s;', _c_accessor_get_expr(field.type.expr, 'R'))
     _c('}')
 
-    if field.field_type[0] in _cardinal_types:
+    if field.type.member.is_simple:
         _hc('')
         _hc('')
         _hc('/*****************************************************************************')
@@ -635,9 +635,15 @@ def _c_complex(self):
     struct_fields = []
     maxtypelen = 0
 
+    varfield = None
     for field in self.fields:
         if not field.type.fixed_size():
-            break
+            varfield = field.c_field_name
+            continue
+        if varfield != None and not field.type.is_pad and field.wire:
+            errmsg = '%s: warning: variable field %s followed by fixed field %s\n' % (self.c_type, varfield, field.c_field_name)
+            sys.stderr.write(errmsg)
+            # sys.exit(1)
         if field.wire:
             struct_fields.append(field)
         
