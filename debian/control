@@ -2,13 +2,11 @@ Source: libxcb
 Priority: optional
 Section: libdevel
 Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
-Build-Depends: libxau-dev, libxdmcp-dev, xcb-proto (>= 1.2), xcb-proto (<< 2.0), libpthread-stubs0-dev (>= 0.1-1), cdbs (>= 0.4.40), debhelper (>= 5.0.0), pkg-config, xsltproc (>= 1.1.19-1), check (>= 0.9.4-2), binutils (>= 2.12.90.0.9), quilt
-XCS-Cross-Host-Build-Depends: xcb-proto (>= 1.2), xcb-proto (<< 2.0), cdbs (>= 0.4.40), debhelper (>= 5.0.0), pkg-config, xsltproc (>= 1.1.19-1), check (>= 0.9.4-2), binutils (>= 2.12.90.0.9), quilt
+Build-Depends: libxau-dev, libxdmcp-dev, xcb-proto (>= 1.2), xcb-proto (<< 2.0), libpthread-stubs0-dev (>= 0.1-1), cdbs (>= 0.4.40), cdbs-embedded (>= 0.2.oi3), debhelper (>= 7), autoconf, automake, libtool (>= 1.5.26-4.ip1), pkg-config, xsltproc (>= 1.1.19-1), check (>= 0.9.4-2), binutils (>= 2.12.90.0.9), python (>= 2.5)
+XCS-Cross-Host-Build-Depends: xcb-proto (>= 1.2), xcb-proto (<< 2.0), cdbs (>= 0.4.40), cdbs-embedded (>= 0.2.oi3), debhelper (>= 7), autoconf, automake, libtool (>= 1.5.26-4.ip1), pkg-config, xsltproc (>= 1.1.19-1), check (>= 0.9.4-2), binutils (>= 2.12.90.0.9), python (>= 2.5)
 XCS-Cross-Build-Depends: libxau-dev, libxdmcp-dev, libpthread-stubs0-dev (>= 0.1-1)
-Standards-Version: 3.7.2
+Standards-Version: 3.8.0
 Homepage: http://xcb.freedesktop.org
-Vcs-Git: git://anongit.freedesktop.org/git/xcb/libxcb
-Vcs-Browser: http://gitweb.freedesktop.org/?p=xcb/libxcb.git
 
 Package: libxcb1
 Section: gui
@@ -33,8 +31,6 @@ Package: libxcb1-dev
 Section: libdevel
 Architecture: any
 Depends: libxcb1 (= ${binary:Version}), libpthread-stubs0-dev, libxau-dev (>= 1:1.0.0-1), libxdmcp-dev (>= 1:1.0.0-1)
-Conflicts: libxcb0-dev
-Replaces: libxcb0-dev
 Description: X C Binding, development files
  This package contains the header and library files needed to build software
  using libxcb, the X C Binding.

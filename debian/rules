@@ -4,20 +4,11 @@ DEB_DH_INSTALL_SOURCEDIR=debian/tmp
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
-include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 
 DEB_MAKE_CHECK_TARGET=check
 DEB_MAKE_INVOKE = $(DEB_MAKE_ENVVARS) $(MAKE) -C $(DEB_BUILDDIR) CFLAGS="$(CFLAGS)"
+DEB_MAKE_CLEAN_TARGET := clean
+DEB_CONFIGURE_SCRIPT := ./autogen.sh
 
-pre-build:: configure
-
-configure: apply-patches
-	autoreconf -f -i -v
-
-#debian/copyright: debian/copyright.debian COPYING
-#	cat $+ > $@
-
-#clean::
-#	-rm -f debian/copyright
-
-#common-install-prehook-arch common-install-prehook-indep:: debian/copyright
+clean::
+	[ ! -f Makefile ] || make distclean

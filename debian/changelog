@@ -1,9 +1,10 @@
-libxcb (1.1.91-0.oi1) unstable; urgency=low
+libxcb (1.1.91-0.oi1) asimov; urgency=low
 
   * New upstream release.
     - Depend on xcb-proto between 1.2 and 2.0
     - Refreshed search-host-xcb-proto.patch
     - autoreconf added
+  * Dropped shlibs.local, not necessary anymore with Lenny dpkg.
 
  -- Mikhail Gusarov <dottedmag@dottedmag.net>  Sun, 24 Aug 2008 21:53:51 +0700
 
